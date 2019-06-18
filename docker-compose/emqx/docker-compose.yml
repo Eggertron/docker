@@ -1,0 +1,11 @@
+version: '3'
+services:
+  emqx:
+    image: 'emqx/emqx:latest'
+    ports:
+      - '80:8080'
+      - '18083:18083'
+      - '1883:1883'
+      - '8083:8083'
+      - '8084:8084'
+# need to add volumes

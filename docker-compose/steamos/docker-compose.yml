@@ -1,0 +1,12 @@
+version: '3'
+services:
+  steamos:
+    image: 'tianon/steam'
+    volumes:
+      - '/dev/dri:/dev/dri'
+      - '/tmp/.X11-unix:/tmp/.X11-unix'
+      - '/dev/shm:/dev/shm'
+      - '/run/user/${UID}/pulse:/run/user/${UID}/pulse'
+      - '/etc/machine-id:/etc/machine-id'
+      - '${HOME}/Downloads:/tmp/Downloads'
+    privileged: true

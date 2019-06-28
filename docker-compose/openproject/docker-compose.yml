@@ -1,0 +1,14 @@
+version: '3'
+services:
+  openproject:
+    image: 'openproject/community'
+    ports:
+      - '8080:80'
+    volumes:
+      - 'pgdata:/var/openproject/pgdata'
+      - 'static:/var/openproject/assets'
+    environment:
+      SECRET_KEY_BASE: secret
+volumes:
+  pgdata:
+  static:

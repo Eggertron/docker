@@ -1,0 +1,15 @@
+version: '3'
+services:
+  vlc:
+    image: 'chrisdaish/vlc'
+    volumes:
+      - '$HOME/Documents:/home/vlc/Documents:rw'
+      - '/dev/snd:/dev/snd'
+      - '/tmp/.X11-unix:/tmp/.X11-unix'
+    privileged: true
+    environment:
+      - UID
+      - GID
+      - uid=${UID}
+      - gid=1001
+      - DISPLAY=unix${DISPLAY}

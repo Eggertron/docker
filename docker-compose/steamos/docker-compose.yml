@@ -1,12 +1,22 @@
 version: '3'
 services:
   steamos:
-    image: 'tianon/steam'
+    image: 'steamos:latest'
     volumes:
       - '/dev/dri:/dev/dri'
       - '/tmp/.X11-unix:/tmp/.X11-unix'
       - '/dev/shm:/dev/shm'
-      - '/run/user/${UID}/pulse:/run/user/${UID}/pulse'
+      - "/run/user/${UID}/pulse:/run/user/${UID}/pulse"
       - '/etc/machine-id:/etc/machine-id'
-      - '${HOME}/Downloads:/tmp/Downloads'
+      - "steam_downloads:/tmp/Downloads"
+      - "steam_local:/home/steam/.local"
+      - "steam_cache:/home/steam/.cache"
+      - "steam_steam:/home/steam/.steam"
+    environment:
+      DISPLAY:
     privileged: true
+volumes:
+  steam_downloads:
+  steam_local:
+  steam_cache:
+  steam_steam:

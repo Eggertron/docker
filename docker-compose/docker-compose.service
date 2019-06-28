@@ -1,0 +1,17 @@
+# /etc/systemd/system/docker-compose.service
+[Unit]
+Description=Docker-Compose Service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+StandardError=null
+StandardOutput=null
+## The working directory must be the absolute path of your docker-compose.yml file
+WorkingDirectory=/opt/docker-compose/docker-compose
+ExecStart=/usr/local/bin/docker-compose up
+ExecStop=/usr/local/bin/docker-compose down
+
+[Install]
+WantedBy=multi-user.target

@@ -1,34 +1,43 @@
+# On pgAdmin, add server with
+# hostname=postgres
+# username=postgres
+# password=postgres
+# database=postgres
+
 version: '3.5'
 
 services:
   postgres:
-    container_name: postgres_container
+    container_name: postgres
     image: postgres
     environment:
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       PGDATA: /data/postgres
     volumes:
-       - postgres:/data/postgres
+      - postgres:/data/postgres
     ports:
       - "5432:5432"
     networks:
       - postgres
-    restart: unless-stopped
+    restart: always
   
   pgadmin:
-    container_name: pgadmin_container
+    container_name: pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: user@postgres.org
       PGADMIN_DEFAULT_PASSWORD: password
     volumes:
-       - pgadmin:/root/.pgadmin
+      - pgadmin:/root/.pgadmin
     ports:
       - "80:80"
     networks:
       - postgres
     restart: unless-stopped
+    depends_on:
+      - postgres
 
 networks:
   postgres:

@@ -30,7 +30,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: user@postgres.org
       PGADMIN_DEFAULT_PASSWORD: password
     volumes:
-      - pgadmin:/root/.pgadmin
+      - pgadmin:/var/lib/pgadmin
     ports:
       - "80:80"
     networks:

@@ -6,7 +6,7 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
-#    restart: always
+    restart: always
     container_name: elastic
     hostname: elasticsearch
     networks:
@@ -34,7 +34,7 @@ services:
   logstash:
     image: logstash:7.2.0
     ports:
-      - 5000:5000
+      - 514:5000/udp
       - 9600:9600
     volumes:
       - "$PWD:/config-dir"

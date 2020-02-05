@@ -1,0 +1,31 @@
+version: '3'
+services:
+
+  elasticsearch:
+    image: elasticsearch:7.5.2
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      ES_JAVA_OPTS: "-Xmx265m -Xms265m"
+      discovery.type: "single-node"
+#      network.host: "0.0.0.0"
+#      bootstrap.seccomp: "false"
+
+  kibana:
+    image: kibana:7.5.0
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+
+  logstash:
+    image: logstash:7.5.2
+    ports:
+      - 514:5000/udp
+      - 9600:9600
+    volumes:
+      - "$PWD:/config-dir"
+    depends_on:
+      - elasticsearch
+    command: logstash -f /config-dir/logstash.conf

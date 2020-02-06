@@ -1,3 +1,5 @@
+#!/bin/bash
+
 firewall-cmd --add-port=2376/tcp --permanent
 firewall-cmd --add-port=2377/tcp --permanent
 firewall-cmd --add-port=7946/tcp --permanent

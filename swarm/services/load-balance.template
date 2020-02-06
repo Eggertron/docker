@@ -1,0 +1,16 @@
+http {
+    upstream myapp1 {
+        server viz:80;
+        server jenkins:8080;
+        server node-red:1880;
+    }
+
+    server {
+        listen 8888;
+
+        location / {
+            proxy_pass http://myapp1;
+        }
+    }
+}
+

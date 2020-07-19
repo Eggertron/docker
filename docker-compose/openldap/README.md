@@ -19,8 +19,18 @@ To enable setup your raspberry pi to use the ldap server for authentication
 ```
 sudo apt-get install -y libpam-ldapd libnss-ldapd
 ```
-During installation you'll need to add the LDAP server search base
+During installation you'll need to add the LDAP server uri
+```
+ldap://your-ldap-server:389
+```
+
+LDAP server search base
 ```
 dc=example,dc=com
 
 ```
+And then you'll want to have these services configured to ldap
+- passwd
+- group
+
+And you're done.

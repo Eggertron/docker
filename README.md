@@ -12,21 +12,23 @@ Now open the following ports
 - 7946/tcp
 - 7946/udp
 - 4789/udp
+
 For example, opening the ports on a Raspberry Pi (Debian)
 ```
-ufw allow 22/tcp
-ufw allow 2376/tcp
-ufw allow 2377/tcp
-ufw allow 7946/tcp
-ufw allow 7946/udp
-ufw allow 4789/udp
-ufw reload
+sudo ufw allow 22/tcp
+sudo ufw limit ssh/tcp
+sudo ufw allow 2376/tcp
+sudo ufw allow 2377/tcp
+sudo ufw allow 7946/tcp
+sudo ufw allow 7946/udp
+sudo ufw allow 4789/udp
+sudo ufw reload
 ```
 # docker-compose
 Some Docker Compose Configurations that I use
 
 
-## Netdata
+# Netdata
 Run Netdata in Docker using the following command
 ```
 curl -sS https://raw.githubusercontent.com/Eggertron/docker/master/netdata | sh

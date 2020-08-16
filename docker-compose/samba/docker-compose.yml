@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  samba:
+    build:
+      dockerfile: Dockerfile
+    image: samba
+    volumes:
+      - samba.conf:/etc/samba/smb.conf
+    ports:
+      - 445:445

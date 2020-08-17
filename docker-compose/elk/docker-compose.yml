@@ -2,7 +2,7 @@ version: '3'
 services:
 
   elasticsearch:
-    image: elasticsearch:7.2.0
+    image: elasticsearch:7.8.1
     ports:
       - 9200:9200
       - 9300:9300
@@ -18,7 +18,7 @@ services:
 #      bootstrap.seccomp: "false"
 
   kibana:
-    image: kibana:7.2.0
+    image: kibana:7.8.1
     restart: always
     depends_on:
       - elasticsearch
@@ -32,12 +32,12 @@ services:
       - logging
 
   logstash:
-    image: logstash:7.2.0
+    image: logstash:7.8.1
     ports:
       - 514:5000/udp
       - 9600:9600
     volumes:
-      - "$PWD:/config-dir"
+      - "$PWD/pipeline/:/usr/share/logstash/pipeline/"
     restart: always
     container_name: logstash
     hostname: logstash
@@ -45,7 +45,6 @@ services:
       - elasticsearch
     networks:
       - logging
-    command: logstash -f /config-dir/logstash.conf
 
 networks:
   logging:

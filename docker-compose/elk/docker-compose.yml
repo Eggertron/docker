@@ -9,8 +9,6 @@ services:
     restart: always
     container_name: elastic
     hostname: elasticsearch
-    networks:
-      - logging
     environment:
       ES_JAVA_OPTS: "-Xmx265m -Xms265m"
       discovery.type: "single-node"
@@ -28,8 +26,6 @@ services:
     hostname: kibana
 #    links:
 #      - elasticsearch:elasticsearch
-    networks:
-      - logging
 
   logstash:
     image: logstash:7.8.1
@@ -43,9 +39,3 @@ services:
     hostname: logstash
     depends_on:
       - elasticsearch
-    networks:
-      - logging
-
-networks:
-  logging:
-    driver: bridge

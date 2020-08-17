@@ -39,3 +39,20 @@ services:
     hostname: logstash
     depends_on:
       - elasticsearch
+
+  curator:
+    build:
+      context: .
+      dockerfile: curator.dockerfile
+    image: curator
+    restart: always
+    container_name: curator
+    hostname: curator
+    volumes:
+      - "$PWD:/app/"
+    command: "--config /app/curator_conf.yml /app/curator_action.yml"
+    depends_on:
+      - elasticsearch
+    deploy:
+      restart_policy:
+        delay: 3600s

@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+    synapse:
+        image: matrixdotorg/synapse:latest
+        volumes:
+            - "$PWD/data/:/data/"
+        ports:
+            - 8008:8008

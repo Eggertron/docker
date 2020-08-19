@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Generate Keys for nginx
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout cert.key -out cert.crt
+
+# Generate Synapse Config
+docker run -it --rm \
+    --mount type=bind,src=$PWD/data,dst=/data \
+    -e SYNAPSE_SERVER_NAME=$(hostname) \
+    -e SYNAPSE_REPORT_STATS=no \
+    matrixdotorg/synapse:latest generate
+

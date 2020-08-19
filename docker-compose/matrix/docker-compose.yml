@@ -3,7 +3,17 @@ version: "3.8"
 services:
     synapse:
         image: matrixdotorg/synapse:latest
+        hostname: synapse
         volumes:
             - "$PWD/data/:/data/"
         ports:
             - 8008:8008
+    nginx:
+        image: nginx
+        volumes:
+            - "$PWD/nginx/:/etc/nginx/conf.d/"
+            - "$PWD/cert.crt:/etc/nginx/cert.crt"
+            - "$PWD/cert.key:/etc/nginx/cert.key"
+        ports:
+            - 443:443
+            - 80:80

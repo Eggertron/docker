@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  redis:
+    image: redis
+    hostname: redis
+    restart: always
+
+  postgres:
+    image: postgres
+    hostname: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+
+  diaspora:
+    image: diaspora
+    hostname: diaspora
+    build:
+      context: ./dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000

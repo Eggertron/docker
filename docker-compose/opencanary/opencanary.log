@@ -1,0 +1,2 @@
+{"dst_host": "", "dst_port": -1, "local_time": "2020-08-29 02:00:02.383824", "logdata": {"msg": {"logdata": "Added service from class CanaryFTP in opencanary.modules.ftp to fake"}}, "logtype": 1001, "node_id": "opencanary-1", "src_host": "", "src_port": -1}
+{"dst_host": "", "dst_port": -1, "local_time": "2020-08-29 02:00:02.384108", "logdata": {"msg": "Canary running!!!"}, "logtype": 1001, "node_id": "opencanary-1", "src_host": "", "src_port": -1}

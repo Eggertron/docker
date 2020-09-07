@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  ngrok:
+    image: ngrok
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      NGROK_AUTHTOKEN: 
+      NGROK_SERVICE: http
+      NGROK_HOSTPORT: web:80
+
+  web:
+    image: nginx

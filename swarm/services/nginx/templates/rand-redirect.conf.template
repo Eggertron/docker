@@ -1,0 +1,14 @@
+split_clients $time_local $rand_url {
+    33.3%   https://www.google.com;
+    33.3%   https://www.reddit.com;
+    *       https://www.duckduckgo.com;
+}
+
+server {
+    listen 8881;
+    
+    location / {
+        expires -1;
+        return 301 "${rand_url}";
+    }
+}

@@ -1,0 +1,14 @@
+upstream myapp1 {
+    server swarm-man-01:80;
+    server swarm-man-02:80;
+    server swarm-wor-01:80;
+}
+
+server {
+    listen 8888;
+
+    location / {
+        proxy_pass http://myapp1;
+    }
+}
+

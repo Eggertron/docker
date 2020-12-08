@@ -17,3 +17,14 @@ docker service create \
 
 
 #  --mount=type=bind,src=config,dst=/config \
+
+if [[ ! -z "$(cat /etc/*release* | grep 'Rasp')" ]]
+then
+  docker service create \
+  --name "home-assistant" \
+  --env TZ="America/New_York" \
+  --publish=8123:8123/tcp \
+  --mount=type=bind,src=/nfs/share/homeassistant,dst=/data \
+  homeassistant/raspberrypi3-homeassistant:stable
+fi
+

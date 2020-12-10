@@ -9,7 +9,12 @@ docker build -t ngrok .
 How to run
 ```
 docker run --rm -e "NGROK_AUTHTOKEN=<your-token>" -e "NGROK_SERVICE=http" -e "NGROK_HOSTPORT=80" ngrok
+
+or
+
+docker run --rm -d -e "NGROK_AUTHTOKEN=<your-token>" -e "NGROK_SERVICE=http" -e "NGROK_HOSTPORT=192.168.1.123:80" ngrok
 ```
+
 env | description
 -----------------
 NGROK_AUTHTOKEN | Your ngrok token

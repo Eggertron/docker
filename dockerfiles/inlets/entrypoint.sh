@@ -9,18 +9,18 @@ echo "Upstream: $INLETS_UPSTREAM"
 
 if [ -z "$INLETS_TOKEN" ]
 then
-    $INLETS_TOKEN=$(head -c 16 /dev/urandom | shasum | cut -d" " -f1)
+    INLETS_TOKEN=$(head -c 16 /dev/urandom | md5sum | cut -d" " -f1)
 fi
 
 if [ "$INLETS_MODE" = "server" ]
 then
     echo "TOKEN: $INLETS_TOKEN"
-    ./inlets server  --port=$INLETS_PORT --token=$INLETS_TOKEN
+    inlets server  --port=$INLETS_PORT --token=$INLETS_TOKEN
 fi
 
 if [ "$INLETS_MODE" = "client" ]
 then
     echo "Client Mode"
-    ./inlets client --remote=$INLETS_REMOTE --upstream=$INLETS_UPSTREAM --token=$INLETS_TOKEN
+    inlets client --remote=$INLETS_REMOTE --upstream=$INLETS_UPSTREAM --token=$INLETS_TOKEN
 fi
 $@

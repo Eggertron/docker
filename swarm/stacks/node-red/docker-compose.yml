@@ -14,5 +14,5 @@ volumes:
     driver: local
     driver_opts:
       type: cifs
-      o: "username=[username],password=[password],iocharset=utf8,sec=ntlmssp,file_mode=0777,dir_mode=0777"
-      device: "//my-nas/share/path/to/folder"
+      o: "username=[username],password=[password],iocharset=utf8,guest,noperm,file_mode=0777,dir_mode=0777"
+      device: "//my-samba-ip/share/path/to/folder"

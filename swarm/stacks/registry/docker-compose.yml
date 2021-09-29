@@ -4,8 +4,6 @@ services:
   web:
     image: registry:2
     restart: always
-    environment:
-      - TZ="America/New_York"
     ports:
       - "5000:5000"
     volumes:

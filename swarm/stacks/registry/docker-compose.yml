@@ -13,6 +13,6 @@ volumes:
   data:
     driver: local
     driver_opts:
-      type: cifs
+      type: "cifs"
       o: "username=[username],password=[password],iocharset=utf8,sec=ntlmssp,file_mode=0777,dir_mode=0777"
       device: "//my-nas/share/path/to/folder"

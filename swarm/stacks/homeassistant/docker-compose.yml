@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  web:
+    image: homeassistant/raspberrypi3-homeassistant:stable
+    restart: always
+    environment:
+      - TZ="America/New_York"
+    ports:
+      - "8123:8123"
+    volumes:
+      - data:/config
+      
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: cifs
+      o: "username=[username],password=[password],iocharset=utf8,sec=ntlmssp,file_mode=0777,dir_mode=0777"
+      device: "//my-nas/share/path/to/folder"

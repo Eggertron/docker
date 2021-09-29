@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  web:
+    image: registry:2
+    restart: always
+    environment:
+      - TZ="America/New_York"
+    ports:
+      - "5000:5000"
+    volumes:
+      - data:/var/lib/registry
+      
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: cifs
+      o: "username=[username],password=[password],iocharset=utf8,sec=ntlmssp,file_mode=0777,dir_mode=0777"
+      device: "//my-nas/share/path/to/folder"

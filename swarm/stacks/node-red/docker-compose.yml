@@ -7,12 +7,12 @@ services:
     ports:
       - "1880:1880"
     volumes:
-      - "nodered_data:/data"
+      - data:/data
       
 volumes:
-  nodered_data:
+  data:
     driver: local
     driver_opts:
-      type: cifs
+      type: "cifs"
       o: "username=[username],password=[password],iocharset=utf8,guest,noperm,file_mode=0777,dir_mode=0777"
       device: "//my-samba-ip/share/path/to/folder"

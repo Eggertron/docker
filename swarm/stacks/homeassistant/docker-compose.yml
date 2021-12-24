@@ -21,3 +21,4 @@ volumes:
 
 # Known bug with version 2021.7
 # https://www.reddit.com/r/homeassistant/comments/og2oss/ha_docker_failing_to_start_after_updating_to/
+# make sure to update libseccomp2 on all nodes that can run homeassistant

@@ -22,8 +22,10 @@ COPY RRDB_ESRGAN_x4.pth models/RRDB_ESRGAN_x4.pth
 
 # Install pytorch cpu only (non-cuda)
 RUN pip install numpy opencv-python
-RUN pip install torch==1.8.2 torchvision==0.9.2 torchaudio==0.8.2 --extra-index-url https://download.pytorch.org/whl/lts/1.8/cu102
+RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 
+RUN pip install opencv-contrib-python-headless
+RUN apt-get install -y libgl1-mesa-glx 
 # mount the LR folder to supply low-res images
 # mount a results folder to 
 CMD ["python", "test.py"] 

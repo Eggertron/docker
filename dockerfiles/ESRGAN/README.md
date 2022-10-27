@@ -21,8 +21,8 @@ stored in the `results` folder.
 
 ```
 docker run \
-    -v lowres:/ESRGAN/LR \
-    -v results:/ESRGAN/results \
+    -v `pwd`/lowres:/ESRGAN/LR \
+    -v `pwd`/results:/ESRGAN/results \
     esrgan
 ```
 
@@ -32,9 +32,14 @@ pre-trained models into the `models` folder. Mount
 
 ```
 docker run \
-    -v lowres:/ESRGAN/LR \
-    -v results:/ESRGAN/results \
-    -v models:/ESRGAN/models \
+    -v `pwd`/lowres:/ESRGAN/LR \
+    -v `pwd`/results:/ESRGAN/results \
+    -v `pwd`/models:/ESRGAN/models \
     esrgan
 ```
 
+### CPU mode (non-CUDA)
+
+the `test.py` script is defaulted to using CUDA. To fix this,
+`bash` into the container and install `vim` to edit `test.py`
+and update with `cpu` line.

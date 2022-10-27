@@ -7,7 +7,9 @@ RUN apt-get install -y \
     bash \
     git \
     curl \
-    build-essential
+    ffmpeg \
+    libsm6 \
+    libxext6
 RUN apt-get clean
 
 # Using this repo: https://github.com/xinntao/esRGAN
@@ -24,4 +26,4 @@ RUN pip install torch==1.8.2 torchvision==0.9.2 torchaudio==0.8.2 --extra-index-
 
 # mount the LR folder to supply low-res images
 # mount a results folder to 
-CMD ['python', 'test.py'] 
+CMD ["python", "test.py"] 

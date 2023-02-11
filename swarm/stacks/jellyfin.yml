@@ -1,0 +1,37 @@
+version: "3.2"
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    restart: always
+    ports:
+      - "8096:8096"
+    volumes:
+      - jellyfin_config:/config
+      - jellyfin_cache:/cache
+      - jellyfin_media:/media:ro
+    networks:
+      - swarm-default
+
+networks:
+  swarm-default:
+    external: true
+volumes:
+  jellyfin_config:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=my.nfs.ip.address,nolock,soft,rw"
+      device: ":/media/hdd4tb/workspace/docker/jellyfin/config"
+  jellyfin_cache:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=my.nfs.ip.address,nolock,soft,rw"
+      device: ":/media/hdd4tb/workspace/docker/jellyfin/cache"
+  jellyfin_media:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=my.nfs.ip.address,nolock,soft,rw"
+      device: ":/media/hdd4tb/videos"

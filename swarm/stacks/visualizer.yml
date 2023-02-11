@@ -1,0 +1,32 @@
+# docker stack up -c vizualizer.yml viz
+version: "3.8"
+
+services:
+  viz:
+    image: alexellis2/visualizer-arm:latest
+    deploy:
+      restart_policy:
+        condition: any
+      placement:
+        constraints:
+          - "node.role==manager"
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    networks:
+      - swarm-default
+
+networks:
+  swarm-default:
+    name: swarm-default
+    driver: overlay
+    attachable: true
+    
+# This stack will also create an overlay network which is attachable by other containers in the swarm.
+# Check out the uptime-kuma.yml to see an example of connecting to the swarm-default network.

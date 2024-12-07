@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Wrapper for docker
+# 1. add start|stop|restart|backup
+# 2. check if mounting volumes exists; if not, create paths
+# 3. backup should tar.gz the entire folder and place backup in /tmp/ or env var defined
+
+function start_jellyfin {
+  echo "Starting Jellyfin on Docker..."
+  docker run -d \
+   --name jellyfin \
+   --user $(id -u):$(id -g) \
+   --net=host \
+   --volume `pwd`/config:/config \
+   --volume `pwd`/cache:/cache \
+   --mount type=bind,source=/mnt/sdb/videos/movies,target=/movies,readonly \
+   --restart=unless-stopped \
+   jellyfin/jellyfin
+}
+
+function backup {
+  echo "Creating Backup..."
+  FILENAME="jellyfin_$(date -I).tar.gz"
+  tar czf /tmp/$FILENAME .
+}
+cmd="$1"
+
+case "$cmd" in
+  "start")
+    start_jellyfin
+    ;;
+  "stop")
+    echo "stop $1"
+    ;;
+  "restart")
+    echo "restart"
+    ;;
+  "backup")
+    backup
+    ;;
+  *)
+    echo "Invalid option"
+    exit 1
+    ;;
+esac

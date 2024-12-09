@@ -23,6 +23,22 @@ function backup {
   FILENAME="jellyfin_$(date -I).tar.gz"
   tar czf /tmp/$FILENAME .
 }
+
+
+if [ ! -d "config" ]
+then
+  echo "config folder missing. creating..."
+  mkdir config
+  chmod 777 config
+fi
+
+if [ ! -d "cache" ]
+then
+  echo "cache folder missing. creating..."
+  mkdir cache
+  chmod 777 cache
+fi
+
 cmd="$1"
 
 case "$cmd" in

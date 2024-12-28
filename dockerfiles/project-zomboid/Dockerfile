@@ -11,6 +11,7 @@ ENV STEAMAPPID 380870
 ENV STEAMAPP pz
 ENV STEAMAPPDIR "${HOMEDIR}/${STEAMAPP}-dedicated"
 ENV RCONVER 0.10.3
+ENV RCONPATH "rcon-${RCONVER}-amd64_linux"
 
 # Install required packages
 RUN set -x \
@@ -21,12 +22,12 @@ RUN set -x \
     && mkdir -p "${STEAMAPPDIR}" \
     && chown -R "${USER}:${USER}" "${HOMEDIR}" "${STEAMAPPDIR}" \
     && apt-get clean \
-    && whoami \
     && rm -rf /var/lib/apt/lists/*
 
 # Download RCON for server remote connection
-RUN curl -OLJ "https://github.com/gorcon/rcon-cli/releases/download/v${RCONVER}/rcon-${RCONVER}-amd64_linux.tar.gz" \
-    && tar xvf rcon-${RCONVER}-amd64_linux.tar.gz
+RUN curl -OLJ "https://github.com/gorcon/rcon-cli/releases/download/v${RCONVER}/${RCONPATH}.tar.gz" \
+    && tar xvf ${RCONPATH}.tar.gz \
+    && mv ${RCONPATH} ${HOMEDIR}/
 
 # Download the Project Zomboid dedicated server app using the steamcmd app
 RUN HOME="${HOMEDIR}" "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
@@ -34,11 +35,9 @@ RUN HOME="${HOMEDIR}" "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAP
                                     +app_update "${STEAMAPPID}" validate \
                                     +quit
 
-
 # Create required folders to keep their permissions on mount
 RUN mkdir -p "${HOMEDIR}/Zomboid" \
-    && whoami \
-    && chown -R steam:steam "${HOMEDIR}/Zomboid"
+    && chown -R steam:steam "${HOMEDIR}/Zomboid" "${HOMEDIR}/${RCONPATH}"
 
 USER steam
 

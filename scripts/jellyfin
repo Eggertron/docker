@@ -5,17 +5,26 @@
 # 2. check if mounting volumes exists; if not, create paths
 # 3. backup should tar.gz the entire folder and place backup in /tmp/ or env var defined
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 function start_jellyfin {
   echo "Starting Jellyfin on Docker..."
   docker run -d \
    --name jellyfin \
    --user $(id -u):$(id -g) \
    --net=host \
-   --volume `pwd`/config:/config \
-   --volume `pwd`/cache:/cache \
+   --volume $SCRIPT_DIR/config:/config \
+   --volume $SCRIPT_DIR/cache:/cache \
    --mount type=bind,source=/mnt/sdb/videos/movies,target=/movies,readonly \
+   --mount type=bind,source=/mnt/sdb/videos/tv,target=/shows,readonly \
    --restart=unless-stopped \
    jellyfin/jellyfin
+}
+
+function stop_jellyfin {
+  echo "Stopping Jellyfin Service..."
+  docker stop jellyfin
+  docker container rm jellyfin
 }
 
 function backup {
@@ -46,10 +55,13 @@ case "$cmd" in
     start_jellyfin
     ;;
   "stop")
-    echo "stop $1"
+    stop_jellyfin
     ;;
   "restart")
-    echo "restart"
+    echo "Restarting Jellyfin service..."
+    stop_jellyfin
+    sleep 3  # allow docker to remove container
+    start_jellyfin
     ;;
   "backup")
     backup

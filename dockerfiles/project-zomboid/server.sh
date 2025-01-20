@@ -2,10 +2,15 @@
 
 VERSION=41
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-RCONPW=YOUR_REMOTE_CONN_ADMIN_PASSWORD
+RCONPW=YOUR_ADMIN_REMOTE_CONN_PASSWORD
 RCONPATH=rcon-0.10.3-amd64_linux/rcon
 
 function zstart {
+    if [ ! -d "$SCRIPT_DIR/Zomboid" ]
+    then
+        echo "Zomboid folder not found. Creating..."
+        mkdir -p "$SCRIPT_DIR/Zomboid"
+    fi
     docker run -itd --rm --name zomboid -v $SCRIPT_DIR/Zomboid:/home/steam/Zomboid -p 16261:16261/udp -p 16262:16262/udp zomboid:41
 }
 
@@ -39,12 +44,12 @@ function backup {
 }
 
 function debugmsg {
-    docker container exec zomboid $RCONPATH -a localhost:27015 -p $RCONPW "servermsg \"DEBUG: This is a test message.\""
+    docker container exec zomboid $RCONPATH -a localhost:27015 -p $RCONPW "$1"
 }
 
 function zhelp {
     echo "Usage:"
-    echo "$0 start|stop|restart|test|updateMods|backup"
+    echo "$0 start|stop|restart|test|updateMods|backup|destroyCurrentWorld"
 }
 
 function checkModsUpdate {
@@ -58,6 +63,13 @@ function checkModsUpdate {
 
 function isPlayersOnline {
     docker container exec zomboid $RCONPATH -a localhost:27015 -p $RCONPW "players" | grep "(0)" && echo "No players in World." && return 0
+}
+
+function newWorld {
+    zstop
+    rm -rf $SCRIPT_DIR/Zomboid/Saves/Multiplayer
+    zstart
+    echo "New Zomboid World Started."
 }
 
 case $1 in
@@ -81,7 +93,10 @@ case $1 in
                 backup
                 exit;;
         updateMods)
-                checkModsUpdate && backup && zstop && sleep 5 && zstart
+                checkModsUpdate && backup && debugmsg "Mods update required. Preparing to restart server." && zstop && sleep 5 && zstart
+                exit;;
+        destroyCurrentWorld)
+                newWorld
                 exit;;
         *)
                 zhelp

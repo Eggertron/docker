@@ -36,17 +36,13 @@ RUN HOME="${HOMEDIR}" "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAP
 
 COPY server_start.sh $STEAMAPPDIR/ShooterGame/Binaries/Linux/
 
-# Create required folders to keep their permissions on mount
-RUN mkdir -p "${HOMEDIR}/Zomboid" \
-    && chown -R steam:steam "${HOMEDIR}/Zomboid" "${HOMEDIR}/${RCONPATH}"
-
 USER steam
 
-WORKDIR ${HOMEDIR}
+WORKDIR ${STEAMAPPDIR}/ShooterGame/Binaries/Linux
 # Expose ports
 # RCON - 27015
 EXPOSE 7777-7778/udp \
        27020/tcp \
        27015/udp
 
-CMD ["$STEAMAPPDIR/ShooterGame/Binaries/Linux/server-start.sh"]
+CMD ["./server-start.sh"]
